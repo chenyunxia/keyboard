@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Hello world!</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/global.css" type="text/css">
+    <link rel="stylesheet" href="../css/pay.css" type="text/css">
+    <style>/*.num-keyboard{bottom: -184px;}*/</style>
+</head>
+<body>
+
+<div class="main-layout">
+    <div class="tran-box">
+        <div id="password1" class="ppwd mb20"><i></i> <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+</div>
+<div class="main-layout">
+    <div class="tran-box">
+        <div id="password2" class="ppwd mb20"><i></i> <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+</div>
+<div id="keyboard"></div>
+<!-- <div class="num-keyboard">
+    <div class="nk-box">
+        <div data-value="1" class="nk-key">1</div>
+        <div data-value="2" class="nk-key">2</div>
+        <div data-value="3" class="nk-key">3</div>
+        <div data-value="4" class="nk-key">4</div>
+        <div data-value="5" class="nk-key">5</div>
+        <div data-value="6" class="nk-key">6</div>
+        <div data-value="7" class="nk-key">7</div>
+        <div data-value="8" class="nk-key">8</div>
+        <div data-value="9" class="nk-key">9</div>
+        <div data-value="-1" class="nk-key nk-gray">关闭</div>
+        <div data-value="0" class="nk-key">0</div>
+        <div data-value="-2" class="nk-key nk-gray">
+            <i class="ico ico-kb-del"></i>
+        </div>
+    </div>
+</div> -->
+<script src="../js/lib/jquery-1.11.3.min.js"></script>
+<script>
+    (function ($) {
+        $.fn.keyEntry = function (dom) {
+            var self = this;
+            // 点击类型判断
+            var tap = 'createTouch' in document ? 'tap' : 'click';
+
+            function init() {
+                var html =
+                        '<div class="num-keyboard" style="display: none;">'
+                        + '<div class="nk-box">'
+                        + '<div data-value="1" class="nk-key">1</div>'
+                        + '<div data-value="2" class="nk-key">2</div>'
+                        + '<div data-value="3" class="nk-key">3</div>'
+                        + '<div data-value="4" class="nk-key">4</div>'
+                        + '<div data-value="5" class="nk-key">5</div>'
+                        + '<div data-value="6" class="nk-key">6</div>'
+                        + '<div data-value="7" class="nk-key">7</div>'
+                        + '<div data-value="8" class="nk-key">8</div>'
+                        + '<div data-value="9" class="nk-key">9</div>'
+                        + '<div data-value="-1" class="nk-key nk-gray">关闭</div>'
+                        + '<div data-value="0" class="nk-key">0</div>'
+                        + '<div data-value="-2" class="nk-key nk-gray">'
+                        + '<i class="ico ico-kb-del"></i>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>';
+                $(self).html(html);
+                $(self).find('.num-keyboard').slideToggle();
+                $(self).data('el', dom);
+                initEvents();
+            };
+            function initEvents() {
+                //点击键盘
+                $(self).find('.num-keyboard').on(tap, 'div[data-value]', function () {
+                    var input = $(self).data('el');
+                    var arrNum = $(input).data('data') || [];
+                    var dataValue = $(this).data('value');
+                    // 删除数字
+                    if (dataValue == '-2') {
+                        if (arrNum.length == 0) {
+                            return;
+                        }
+                        arrNum.unshift();
+                        $(input).children().eq(arrNum.length - 1).removeClass('active');
+                        arrNum.length--;
+                    } else if (arrNum.length > 5) {
+                        return;
+                    } else {
+                        // 输入的数字存到数组里
+                        arrNum.push(dataValue);
+                        $(input).children().eq(arrNum.length - 1).addClass('active');
+                        if (arrNum.length > 5) {
+                            $(self).find('.num-keyboard').slideToggle();
+                        }
+                    }
+                    $(input).data('data', arrNum);
+                });
+            };
+            init();
+        }
+    })(jQuery);
+
+    $(function () {
+        $('#password1,#password2').on('click', function () {
+            $('#keyboard').keyEntry(this);
+        });
+    })
+</script>
+</body>
+</html>

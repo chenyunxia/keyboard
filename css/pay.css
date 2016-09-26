@@ -1,0 +1,42 @@
+.abs {
+  position: absolute;
+}
+.rel {
+  position: relative;
+}
+.noborder {
+  border: 0 none !important;
+}
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+.clear {
+  *zoom: 1;
+}
+.clear:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  clear: both;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+html,
+body {
+  background: #eee;
+}
+.orange {
+  color: #ff5400;
+}
+.fz20 {
+  font-size: 20px;
+}
+.fz14 {
+  font-size: 14px;
+}
